@@ -1,0 +1,81 @@
+{% block addProductModal %}
+
+    <div class="ui modal" id="add-product" tabindex="-1" role="dialog" aria-labelledby="add-product" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalCenterTitle">Add a new Product</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="text">Product Name</label>
+                <input type="text" class="form-control" id="email" name="name" aria-describedby="emailHelp" placeholder="Enter product name">
+                <small id="emailHelp" class="form-text text-muted"></small>
+              </div>
+
+              <div class="form-group">
+                <label for="text">Description</label>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Write something about your product">
+              </div>
+
+              <div class="form-group">
+                <label for="text">Product Type</label> <br>
+                <input type="radio" id="mobile" name="type" value="Mobile">
+                <label for="text">Mobile</label>
+                <input type="radio" id="laptop" name="type" value="Laptop">
+                <label for="text">Laptop</label>
+
+                <!-- <input name="update-type-{{ product.id }}" value="{{ product.id }}" type="text"> -->
+                  <!-- <select class="form-control" name="update-type-{{ product.id }}">
+                    <option>Select Product Type</option>
+                    <option selected="selected">Mobile</option>
+                    <option>Laptop</option>
+                  </select> -->
+                <!-- </input> -->
+              </div>
+
+              <div class="form-group">
+                <label for="text">Processor</label>
+                <input type="text" class="form-control" id="processor" name="processor" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label for="text">RAM</label>
+                <input type="text" class="form-control" id="ram" name="ram" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label for="text">Screen Size</label>
+                <input type="text" class="form-control" id="screen_size" name="screen_size" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label for="text">Color</label>
+                <input type="text" class="form-control" id="color" name="color" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label for="text">HD Capacity</label>
+                <input type="text" class="form-control" id="hd_capacity" name="hd_capacity" placeholder="">
+              </div>
+              <input type="hidden" name="csrf" value="{{ csrf_token }}">
+            </div>
+          </form>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <!-- <a class="btn btn-primary" data-toggle="modal" href="add_product/">Add</a> -->
+            <button type="button" class="btn btn-primary" onclick="add_product()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% include 'eStoreApp/alertModal.html' %}
+    
+{% endblock %}

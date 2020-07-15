@@ -1,0 +1,85 @@
+{% block updateProductModal %}
+
+    <div class="ui modal" id="update-product-{{ product.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalCenterTitle">Update Product</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="text">Product Name</label>
+                <input type="text" class="form-control" value="{{ product.name }}" id="email" name="update-name-{{ product.id }}">
+                <small id="emailHelp" class="form-text text-muted"></small>
+              </div>
+              <div class="form-group">
+                <label for="text">Description</label>
+                <input type="text" class="form-control" value="{{ product.description }}" id="description" name="update-description-{{ product.id }}">
+              </div>
+              <div class="form-group">
+                <label for="text">Product Type</label> <br>
+
+                {% if product.product_type == 'Mobile' %}
+                  <input type="radio" id="mobile" name="update-type-{{ product.id }}" value="Mobile" checked="checked">
+                  <label for="mobile">Mobile</label>
+                  <input type="radio" id="laptop" name="update-type-{{ product.id }}" value="Laptop">
+                  <label for="laptop">Laptop</label>
+
+                {% else %}
+                  <input type="radio" id="mobile" name="update-type-{{ product.id }}" value="Mobile">
+                  <label for="mobile">Mobile</label>
+                  <input type="radio" id="laptop" name="update-type-{{ product.id }}" value="Laptop" checked="checked">
+                  <label for="laptop">Laptop</label>
+
+                {% endif %}
+
+                <!-- <input name="update-type-{{ product.id }}" value="{{ product.id }}" type="text"> -->
+                  <!-- <select class="form-control" name="update-type-{{ product.id }}">
+                    <option>Select Product Type</option>
+                    <option selected="selected">Mobile</option>
+                    <option>Laptop</option>
+                  </select> -->
+                <!-- </input> -->
+              </div>
+              <div class="form-group">
+                <label for="text">Processor</label>
+                <input type="text" class="form-control" value="{{ product.processor }}" id="processor" name="update-processor-{{ product.id }}">
+              </div>
+              <div class="form-group">
+                <label for="text">RAM</label>
+                <input type="text" class="form-control" value="{{ product.RAM }}" id=ram name="update-ram-{{ product.id }}">
+              </div>
+              <div class="form-group">
+                <label for="text">Screen Size</label>
+                <input type="text" class="form-control" value="{{ product.screen_size }}" id="screen_size" name="update-screen_size-{{ product.id }}">
+              </div>
+              <div class="form-group">
+                <label for="text">Color</label>
+                <input type="text" class="form-control" value="{{ product.color }}" id="color" name="update-color-{{ product.id }}">
+              </div>
+              <div class="form-group">
+                <label for="text">HD Capacity</label>
+                <input type="text" class="form-control" value="{{ product.hd_capacity }}" id="hd_capacity" name="update-hd_capacity-{{ product.id }}">
+              </div>
+              <input type="hidden" name="product-id-{{ product.id }}" value="{{ product.id }}">
+              <input type="hidden" name="csrf" value="{{ csrf_token }}">
+            </div>
+          </form>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <!-- <a class="btn btn-primary" data-toggle="modal" href="update_product/">Update</a> -->
+            <button type="button" class="btn btn-primary" onclick="update_product('{{ product.id }}')">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% include 'eStoreApp/alertModal.html' %}
+    
+{% endblock %}
