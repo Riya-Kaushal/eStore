@@ -1,34 +1,38 @@
+{% load static %}
 {% block dashboard %}
+
+<br><br>
 
           <div class="container-fluid">
 
-
-            <!-- This row will show hotel recommendations -->
             {% for product in products %}
 
                   <div class="row">
 
                       <div class="bg-mattBlackLight my-2 p-3">
+                        <div class="container-fluid">
                         <div class="media">
-                          <img src="images/{{ hotel.hotel_image }}" class="align-self-start mr-3" alt="Hotel 1" width="250" height="200">
-                          <div class="media-body">
-                            <a href="" class="mt-0">{{ product.name }}</a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#alertModal">Delete</button>
-                            <!-- <a class="btn btn-primary" data-toggle="modal" href="#updateProductModal">Update</a> -->
-                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateProductModal('{{ product.id }}')">Update</button>
+                          <img src="{% static 'img/sample_mobile.png' %}" alt="My image" width="250" height="200"/>
+                          <!-- <img src="images/sample_mobile.png" class="align-self-start mr-3" alt="Product 1" width="250" height="200"> -->
+                          <div class="media-body" style="padding-left: 30px;">
+                            <span class="product-name"><strong><i>{{ product.name }}</i></strong></span>
+                            <button type="button" id="dashboard-btn" class="btn btn-danger" data-toggle="modal" onclick="deleteProductModal('{{ product.id }}')" style="align-self:right;">Delete</button>
+                            <button type="button" id="dashboard-btn" class="btn btn-info" data-toggle="modal" onclick="updateProductModal('{{ product.id }}')">Update</button>
 
                             <p class="address">{{ product.ram }}</p>
-                            <p> <ion-icon name="eye-outline"></ion-icon> {{ product.processor }} <p>
+                            <p> <ion-icon name="eye-outline"></ion-icon> {{ product.processor }} </p>
                             <div id="summary">
-                              <p class="collapse" id="collapseSummary">{{ product.description }}</p>
-                              <a class="collapsed" data-toggle="collapse" href="#collapseSummary" aria-expanded="false" aria-controls="collapseSummary"></a>
+                              <p class="collapse" id="collapseSummary-{{ product.id }}">{{ product.description }}</p>
+                              <a class="collapsed" data-toggle="collapse" href="#collapseSummary-{{ product.id }}" aria-expanded="false" aria-controls="collapseSummary"></a>
                             </div>
 
                           </div>
                         </div>
+                        </div>
                       </div>
 
                   </div>
+                {% include 'eStoreApp/deleteProductConfirmationForm.html' %}
                 {% include 'eStoreApp/editProductForm.html' %}
             {% endfor %}
 

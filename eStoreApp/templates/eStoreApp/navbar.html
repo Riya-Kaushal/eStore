@@ -1,39 +1,19 @@
 {% block navbar %}
 
-<!--    <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Draft Booking Confirmation Modal</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <a class="btn btn-primary" data-toggle="modal" href="/add_product/">Save</a>
-            <button type="button" class="btn btn-primary">Save changes</button> 
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
-
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-mattBlackLight fixed-top">
 
 
+<div class="row" >
+  <div class="col md-3" style="padding-right: 870px;">
     <div id="logoContainer">
       <button class="navbar-toggler sideMenuToggler" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <span>
-        <a class="navbar-brand" href=""><i class="material-icons icon">devices_other</i>Electronics Store</a>
+        <a class="navbar-brand" href="">
+          <!-- <i class="material-icons icon">devices_other</i> -->
+        Electronics Store</a>
       </span>
 
       <button
@@ -49,27 +29,30 @@
       </button>
 
     </div>
+  </div>
 
     <!-- <div class=""> -->
-        <div class="searchbar">
+        <!-- <div class="searchbar">
           <input class="search_input" type="text" name="" placeholder="Search...">
           <a href="#" class="search_icon"><i class="material-icons icon">search</i></span></a>
         </div>
-    <!-- </div> -->
+ -->    <!-- </div> -->
 
-    <div id="container">
+    <!-- <div id="container"> -->
       {% if user.is_authenticated %}
 
-        <div class="row">
+        <!-- <div class="row" style="padding-left: 500px; align-self: right;"> -->
 
 
           <div class="col md-3">
-            <!-- <a class="btn btn-primary" data-toggle="modal" href="addProductModal">open Popup</a> -->
-            <button type="submit" class="submit-button" data-toggle="modal" onclick="addProductModal()">Add Product</button>
+            <div id="container">
+            <button type="submit" class="submit-button" data-toggle="modal" onclick="addProductModal()">  Add  </button>
+          </div>
           </div>
 
 
-          <div class="col">
+          <div class="col md-3" >
+            <div id="container">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
               <ul class="navbar-nav ml-auto">
@@ -87,18 +70,18 @@
               </ul>
             </div>
           </div>
-
         </div>
+
+        <!-- </div> -->
 
       {% else %}
         <button type="button" class="btn btn-info" data-toggle="modal">Register</button>
         <button type="button" class="btn btn-info" data-toggle="modal">Signin</button>
       {% endif %}
 
-    </div>
+    <!-- </div> -->
 
-
-
+  </div>
 
     </nav>
     

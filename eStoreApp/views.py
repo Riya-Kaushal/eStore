@@ -4,22 +4,17 @@ from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from . models import Product, ProductImage 
 
 # Create your views here.
 
 
-# def login_view(request):
-#     login(request)
-#     print("Logged in successfully!")
-#     return redirect('/homepage')
-
-
 def login_view(request):
     if request.method == 'POST':
         user = authenticate(
-            username= request.POST['username'].strip(),
+            username= request.POST['username'],
             password= request.POST['password'],
             )
         if user is None:
@@ -27,14 +22,15 @@ def login_view(request):
         else:
             if user.is_active:
                 login(request, user)
-                return redirect('/homepage')
+                request.session['user_id'] = user.id
+                return redirect('/homepage/mobile')
             else:
                 messages.error(request, u'User is not active.')
 
-                return render_to_response('eStoreApp/login.html', locals(),      
+                return render_to_response('eStoreApp/registerOrLogin.html', locals(),      
                     context_instance=RequestContext(request))
 
-    return render(request, 'eStoreApp/login.html', {})
+    return render(request, 'eStoreApp/registerOrLogin.html', {})
 
 
 
@@ -62,30 +58,35 @@ def register(request):
 												last_name=last_name)
 				user.save();
 				print('User Created')
-				return redirect('/homepage')
+				return redirect('/homepage/mobile')
 
 		print('password not matching')
-	return render(request, 'eStoreApp/register.html', {})
-
+	return render(request, 'eStoreApp/registerOrLogin.html', {})
 
 
 
 @login_required(login_url='/login/')
-def homepage(request):
-	
-	laptops = Product.objects.filter(product_type="Laptop")
+def homepage_mobile(request):
 	mobiles = Product.objects.filter(product_type="Mobile")
-	products = Product.objects.all()
-	# completed_bookings_count = BookingDetail.objects.filter(status="Completed", guest=user).count()
-	# draft_bookings_count = BookingDetail.objects.filter(status="Draft", guest=user).count()
-	# # for hotel in recommended_hotels:
-	# print(completed_bookings_count)
-
 	return render(request, 'eStoreApp/homepage.html', 
 							{'user': request.user,
-							'laptops': laptops,
-							'mobiles': mobiles,
-							'products': products})
+							'products': mobiles})
+
+
+@login_required(login_url='/login/')
+def homepage_mobile(request):
+	mobiles = Product.objects.filter(product_type="Mobile")
+	return render(request, 'eStoreApp/homepage.html', 
+							{'user': request.user,
+							'products': mobiles})
+
+
+@login_required(login_url='/login/')
+def homepage_laptop(request):
+	laptops = Product.objects.filter(product_type="Laptop")
+	return render(request, 'eStoreApp/homepage.html', 
+							{'user': request.user,
+							'products': laptops})
 
 
 
@@ -121,12 +122,10 @@ def add_product(request):
 		productObject.save()
 		print('Created productObject')
 
-		return render(request, 'eStoreApp/homepage.html', 
-							{'alert_action': 'created',
-							'openAlertModal': 1})
+		return render(request, 'eStoreApp/homepage.html', {})
 
 	else:
-		return redirect('/homepage')
+		return redirect('/homepage/mobile')
 
 
 
@@ -163,11 +162,10 @@ def update_product(request):
 
 		productObject.save()
 		print('Updated productObject')		
-		return render(request, 'eStoreApp/homepage.html', 
-							{'alert_action': 'updated'})
+		return render(request, 'eStoreApp/homepage.html', {})
 
 	else:
-		return redirect('/homepage')
+		return redirect('/homepage/mobile')
 
 
 
@@ -176,44 +174,23 @@ def update_product(request):
 def delete_product(request):
 	if request.method == 'POST':
 		product_id = request.POST.get('product-id')
-		name = request.POST['name']
-		description = request.POST['description']
-		product_type = request.POST['product_type']
-		processor = request.POST['processor']
-		RAM = request.POST['RAM']
 
-		productObject = Product.objects.get(id=product_id)
-
-		# creating object
-		productObject.name=name
-		productObject.description = description
-		productObject.product_type = product_type
-		productObject.processor = processor
-		productObject.RAM = RAM
-
-		if product_type == 'Mobile':
-			productObject.screen_size = request.POST['screen_size']
-			productObject.color = request.POST['color']
-			productObject.hd_capacity = '-'
-
-		elif product_type == 'Laptop':
-			productObject.screen_size = '-'
-			productObject.color = '-'
-			productObject.hd_capacity = request.POST['hd_capacity']
-
-		productObject.save()
-		print('Updated productObject')		
-		return render(request, 'eStoreApp/homepage.html', 
-							{'alert_action': 'updated'})
-
+		productObject = Product.objects.get(id=product_id).delete()
+		print('Deleted productObject')		
+		return render(request, 'eStoreApp/homepage.html', {})
 	else:
-		return redirect('/homepage')
+		return redirect('/homepage/mobile')
 
 
 
 
 @login_required(login_url='/login/')
 def logout_view(request):
+    try:
+        del request.session['user_id']
+    except KeyError:
+        pass
     logout(request)
     print("Logged out successfully!")
-    return redirect('/homepage')
+    return redirect('/homepage/mobile')
+    
